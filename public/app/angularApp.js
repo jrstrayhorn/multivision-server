@@ -5,7 +5,7 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', function($
     $stateProvider
         .state('main', {
             url: '/main',
-            templateUrl: '/partials/partial-main.html',
+            templateUrl: '/app/main/main.html',
             controller: 'mainCtrl'
         })
         ;

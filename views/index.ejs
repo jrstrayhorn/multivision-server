@@ -2,9 +2,9 @@
     <head>
         <title>Multivision</title>
         <!--<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">-->
-        <link href="/stylesheets/bootstrap.css" rel="stylesheet">
+        <link href="/app/_dist/bootstrap.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.css">
-        <link href="/stylesheets/site.css" rel="stylesheet">
+        <link href="/app/_dist/site.css" rel="stylesheet">
     </head>
     <body ng-app="app">
         <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -20,6 +20,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="/">Home</a></li>
                     </ul>
+                    <div ng-include="'/app/account/navbar-login.html'"></div>
                 </div>
             </div>
         </nav>
@@ -32,7 +33,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.js"></script>
-        <script src="/javascripts/angularApp.js"></script>
-        <script src="/javascripts/main/mainCtrl.js"></script>
+        <script src="/app/angularApp.js"></script>
+        <script src="/app/main/mainCtrl.js"></script>
     </body>
 </html>
