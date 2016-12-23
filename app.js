@@ -16,6 +16,20 @@ mongoose.Promise = global.Promise;
 mongoose.connect(config.mongoUrl);
 
 // create default admin user
+var User = mongoose.model('User');
+
+User.find({}).exec(function(err, collection){
+  if(collection.length === 0) {
+    var user = new User();
+
+    user.firstname = config.defaultAdminFirstName;
+    user.lastname = config.defaultAdminLastName;
+    user.username = config.defaultAdminUser;
+    user.setPassword(config.defaultAdminPwd);
+    
+    user.save();
+  }
+})
 
 var index = require('./routes/index');
 var users = require('./routes/users');
