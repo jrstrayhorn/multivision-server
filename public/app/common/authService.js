@@ -1,4 +1,4 @@
-angular.module('app').controller('authService', ['$http', '$window', function($http, $window){
+angular.module('app').factory('authService', ['$http', '$window', function($http, $window){
     var auth = {};
 
     auth.saveToken = function (token){
