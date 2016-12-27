@@ -1,7 +1,16 @@
 <div class="navbar-right" ng-controller="navBarLoginCtrl">
     <ul class="nav navbar-nav">
-        <li ng-show="isLoggedIn()"><a>{{ currentUser() }}</a></li>
-        <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
+        <li ng-show="isLoggedIn()" class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">
+                {{ currentUser() }}
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="" ng-click="logOut()">Log Out</a>
+                </li>
+            </ul>
+        </li>
         <li><a ng-hide="isLoggedIn()" href="/#/login">Log in</a></li>
     </ul>
 </div>
