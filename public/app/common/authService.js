@@ -30,6 +30,15 @@ angular.module('app').factory('authService', ['$http', '$window', function($http
         }
     };
 
+    auth.currentUserFullName = function(){
+        if(auth.isLoggedIn()){
+            var token = auth.getToken();
+            var payload = JSON.parse($window.atob(token.split('.')[1]));
+
+            return payload.firstname + ' ' + payload.lastname;
+        }
+    };
+
     auth.logIn = function(user){
         return $http.post('/login', user).success(function(data){
             auth.saveToken(data.token);
