@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
-var config = require('../server-config');
+var config = require('../server/config/server-config');
 
 var UserSchema = new mongoose.Schema({
     firstname: String,
