@@ -1,11 +1,14 @@
 <div class="navbar-right" ng-controller="navBarLoginCtrl">
     <ul class="nav navbar-nav">
         <li ng-show="isLoggedIn()" class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="">
                 {{ currentUserFullName() }}
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
+                <li ng-show="isAdmin()">
+                    <a href="/admin/user">User Admin</a>
+                </li>
                 <li>
                     <a href="" ng-click="logOut()">Log Out</a>
                 </li>

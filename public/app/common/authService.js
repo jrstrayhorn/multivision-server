@@ -30,6 +30,15 @@ angular.module('app').factory('authService', ['$http', '$window', function($http
         }
     };
 
+    auth.isAdmin = function(){
+        if(auth.isLoggedIn()){
+            var token = auth.getToken();
+            var payload = JSON.parse($window.atob(token.split('.')[1]));
+
+            return payload.admin;
+        }
+    }
+
     auth.currentUserFullName = function(){
         if(auth.isLoggedIn()){
             var token = auth.getToken();

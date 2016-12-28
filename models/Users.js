@@ -8,17 +8,18 @@ var UserSchema = new mongoose.Schema({
     lastname: String,
     username: {type: String, lowercase: true, unique: true},
     hash: String,
-    salt: String
+    salt: String,
+    roles: [String]
 });
 
 UserSchema.methods.setPassword = function(password) {
     this.salt = crypto.randomBytes(16).toString('hex');
 
-    this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
+    this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha1').toString('hex');
 };
 
 UserSchema.methods.validPassword = function(password) {
-    var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
+    var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha1').toString('hex');
 
     return this.hash === hash;
 };
@@ -35,8 +36,13 @@ UserSchema.methods.generateJWT = function() {
         username: this.username,
         firstname: this.firstname,
         lastname: this.lastname,
+        admin: isAdmin(this.roles),
         exp: parseInt(exp.getTime() / 1000)
     }, config.secretKey);
 };
+
+function isAdmin(roles) {
+    return roles && roles.indexOf('admin') > -1;
+}
 
 mongoose.model('User', UserSchema);
