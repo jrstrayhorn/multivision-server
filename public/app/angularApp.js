@@ -19,6 +19,22 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', function($
                 }
             }]
         })
+
+        .state('adminUsers', {
+            url: '/admin/users',
+            templateUrl: '/app/admin/user-list.html',
+            controller: 'userListCtrl',
+            resolve: {
+                userPromise: ['userService', function(userService){
+                    return userService.getAll();
+                }]
+            },
+            onEnter: ['$state', 'authService', function($state, authService){
+                if(!authService.isAuthorized('admin')){
+                    $state.go('main');
+                }
+            }]
+        })
         ;
     
     $urlRouterProvider.otherwise('main');

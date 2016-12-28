@@ -35,9 +35,18 @@ angular.module('app').factory('authService', ['$http', '$window', function($http
             var token = auth.getToken();
             var payload = JSON.parse($window.atob(token.split('.')[1]));
 
-            return payload.admin;
+            return payload.roles && payload.roles.indexOf('admin') > -1;
         }
-    }
+    };
+
+    auth.isAuthorized = function(role){
+        if(auth.isLoggedIn()){
+            var token = auth.getToken();
+            var payload = JSON.parse($window.atob(token.split('.')[1]));
+
+            return payload.roles && payload.roles.indexOf(role) > -1;
+        }
+    };
 
     auth.currentUserFullName = function(){
         if(auth.isLoggedIn()){

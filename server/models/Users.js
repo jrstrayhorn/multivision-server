@@ -36,13 +36,10 @@ UserSchema.methods.generateJWT = function() {
         username: this.username,
         firstname: this.firstname,
         lastname: this.lastname,
-        admin: isAdmin(this.roles),
+        roles: this.roles,
         exp: parseInt(exp.getTime() / 1000)
     }, config.secretKey);
 };
 
-function isAdmin(roles) {
-    return roles && roles.indexOf('admin') > -1;
-}
 
 mongoose.model('User', UserSchema);

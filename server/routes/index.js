@@ -3,10 +3,29 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var passport = require('passport');
+var jwt = require('express-jwt');
+var jwtPerm = require('express-jwt-permissions');
+
+var config = require('../../server/config/server-config');
+
+// middleware for authenticating jwt tokens
+var authJWT = jwt({secret: config.secretKey, userProperty: 'payload'});
+
+// middleware for checking permissions of jwt token
+var guard = jwtPerm({requestProperty: 'payload', permissionsProperty: 'roles'});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
+});
+
+/* GET users */
+router.get('/api/users', authJWT, guard.check('admin'), function(req, res, next){
+  User.find(function(err, users){
+    if(err) { return next(err); }
+
+    res.json(users);
+  });
 });
 
 /* POST login */
