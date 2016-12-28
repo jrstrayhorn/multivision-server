@@ -2,8 +2,8 @@ var mongoose = require('mongoose');
 
 module.exports = function(config) {
     // connect to MongoDB
-    require('../../models/Users');
-    require('../../config/passport');
+    require('../../server/models/Users');
+    
     mongoose.Promise = global.Promise;
     mongoose.connect(config.mongoUrl);
 

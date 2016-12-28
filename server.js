@@ -3,16 +3,16 @@ var passport = require('passport');
 
 var config = require('./server/config/server-config');
 
+var app = express();
+
 //setup mongo/mongoose
 require('./server/config/mongoose')(config);
 
-var app = express();
+// setup passport
+require('./server/config/passport');
 
 // setup express
 require('./server/config/express')(app);
-
-// initialize passport
-app.use(passport.initialize());
 
 // setup routes
 require('./server/config/routes')(app);
