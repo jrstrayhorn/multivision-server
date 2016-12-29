@@ -9,6 +9,12 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', function($
             controller: 'mainCtrl'
         })
 
+        .state('signup', {
+            url: '/signup',
+            templateUrl: '/app/account/signup.html',
+            controller: 'signupCtrl'
+        })
+
         .state('login', {
             url: '/login',
             templateUrl: '/app/account/login.html',

@@ -1,12 +1,13 @@
 var express = require('express');
 var router = express.Router();
-var mongoose = require('mongoose');
-var User = mongoose.model('User');
-var passport = require('passport');
+
 var jwt = require('express-jwt');
 var jwtPerm = require('express-jwt-permissions');
+var auth = require('../../server/config/auth');
 
 var config = require('../../server/config/server-config');
+
+var users = require('../../server/controllers/users.controller');
 
 // middleware for authenticating jwt tokens
 var authJWT = jwt({secret: config.secretKey, userProperty: 'payload'});
@@ -20,29 +21,12 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET users */
-router.get('/api/users', authJWT, guard.check('admin'), function(req, res, next){
-  User.find(function(err, users){
-    if(err) { return next(err); }
+router.get('/api/users', authJWT, guard.check('admin'), users.getUsers);
 
-    res.json(users);
-  });
-});
+/* POST register */
+router.post('/register', users.createUser);
 
 /* POST login */
-router.post('/login', function(req, res, next) {
-  if(!req.body.username || !req.body.password) {
-    return res.status(400).json({message: 'Please fill out all fields'});
-  }
-
-  passport.authenticate('local', function(err, user, info){
-    if(err){ return next(err); }
-
-    if(user){
-      return res.json({token: user.generateJWT()});
-    } else {
-      return res.status(401).json(info);
-    }
-  })(req, res, next);
-});
+router.post('/login', auth.authenticate);
 
 module.exports = router;
