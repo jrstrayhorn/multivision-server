@@ -30,6 +30,24 @@ angular.module('app').factory('authService', ['$http', '$window', function($http
         }
     };
 
+    auth.currentUserFirstName = function(){
+        if(auth.isLoggedIn()){
+            var token = auth.getToken();
+            var payload = JSON.parse($window.atob(token.split('.')[1]));
+
+            return payload.firstname;
+        }
+    };
+
+    auth.currentUserLastName = function(){
+        if(auth.isLoggedIn()){
+            var token = auth.getToken();
+            var payload = JSON.parse($window.atob(token.split('.')[1]));
+
+            return payload.lastname;
+        }
+    };
+
     auth.isAdmin = function(){
         if(auth.isLoggedIn()){
             var token = auth.getToken();
@@ -59,6 +77,15 @@ angular.module('app').factory('authService', ['$http', '$window', function($http
 
     auth.register = function(user){
         return $http.post('/register', user).success(function(data){
+            auth.saveToken(data.token);
+        });
+    };
+
+    auth.update = function(user){
+        return $http.put('/api/users', user, {
+            headers: {Authorization: 'Bearer ' + auth.getToken()}
+        }).success(function(data){
+            auth.logOut();
             auth.saveToken(data.token);
         });
     };

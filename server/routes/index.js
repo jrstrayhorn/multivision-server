@@ -26,6 +26,9 @@ router.get('/api/users', authJWT, guard.check('admin'), users.getUsers);
 /* POST register */
 router.post('/register', users.createUser);
 
+/* POST updateuser */
+router.put('/api/users', authJWT, users.updateUser);
+
 /* POST login */
 router.post('/login', auth.authenticate);
 

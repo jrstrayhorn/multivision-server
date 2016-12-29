@@ -9,6 +9,31 @@ exports.getUsers = function(req, res, next){
   });
 };
 
+exports.updateUser = function(req, res, next){
+    if(!req.body.username || !req.body.firstname || !req.body.lastname){
+        return res.status(400).json({message: 'Please fill out all fields'});
+    }
+
+    var userUpdates = {};
+
+    userUpdates.username = req.body.username;
+    userUpdates.firstname = req.body.firstname;
+    userUpdates.lastname = req.body.lastname;
+    if (req.body.password && req.body.password.length > 0) {
+        var user = new User();
+        user.setPassword(req.body.password);
+        userUpdates.salt = user.salt;
+        userUpdates.hash = user.hash;
+    }
+
+    User.findByIdAndUpdate(req.payload._id, {
+        $set: userUpdates
+    }, function (err, user) {
+        if (err) return res.status(400).json({message: err.toString()});
+        return res.json({token: user.generateJWT()});
+    });
+};
+
 exports.createUser = function(req, res, next){
     if(!req.body.email || !req.body.password || !req.body.fname || !req.body.lname){
         return res.status(400).json({message: 'Please fill out all fields'});

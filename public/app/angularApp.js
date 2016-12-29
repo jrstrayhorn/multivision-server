@@ -12,16 +12,32 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', function($
         .state('signup', {
             url: '/signup',
             templateUrl: '/app/account/signup.html',
-            controller: 'signupCtrl'
+            controller: 'signupCtrl',
+            onEnter: ['$location', 'authService', function($location, authService){
+                if(authService.isLoggedIn()){
+                    $location.path("/");
+                }
+            }]
+        })
+
+        .state('profile', {
+            url: '/profile',
+            templateUrl: '/app/account/profile.html',
+            controller: 'profileCtrl',
+            onEnter: ['$location', 'authService', function($location, authService){
+                if(!authService.isLoggedIn()){
+                    $location.path("/");
+                }
+            }]
         })
 
         .state('login', {
             url: '/login',
             templateUrl: '/app/account/login.html',
             controller: 'loginCtrl',
-            onEnter: ['$state', 'authService', function($state, authService){
+            onEnter: ['$location', 'authService', function($location, authService){
                 if(authService.isLoggedIn()){
-                    $state.go('main');
+                    $location.path("/");
                 }
             }]
         })
@@ -35,9 +51,9 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', function($
                     return userService.getAll();
                 }]
             },
-            onEnter: ['$state', 'authService', function($state, authService){
+            onEnter: ['$location', 'authService', function($location, authService){
                 if(!authService.isAuthorized('admin')){
-                    $state.go('main');
+                    $location.path("/");
                 }
             }]
         })

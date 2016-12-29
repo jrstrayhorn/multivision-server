@@ -10,13 +10,16 @@
                     <a ui-sref="adminUsers">User Admin</a>
                 </li>
                 <li>
+                    <a ui-sref="profile">Profile</a>
+                </li>
+                <li>
                     <a href="" ng-click="logOut()">Log Out</a>
                 </li>
             </ul>
         </li>
         <li>
-            <a ng-hide="isLoggedIn()" href="/#/signup">Sign Up</a>
+            <a ng-hide="isLoggedIn()" ui-sref="signup">Sign Up</a>
         </li>
-        <li><a ng-hide="isLoggedIn()" href="/#/login">Log in</a></li>
+        <li><a ng-hide="isLoggedIn()" ui-sref="login">Log in</a></li>
     </ul>
 </div>
