@@ -41,5 +41,32 @@ UserSchema.methods.generateJWT = function() {
     }, config.secretKey);
 };
 
+var User = mongoose.model('User', UserSchema);
 
-mongoose.model('User', UserSchema);
+function createDefaultAdminUsers() {
+    User.find({}).exec(function(err, collection){
+    if(collection.length === 0) {
+        var user = new User();
+
+        user.firstname = config.defaultAdminFirstName;
+        user.lastname = config.defaultAdminLastName;
+        user.username = config.defaultAdminUser;
+        user.roles = ['admin'];
+        user.setPassword(config.defaultAdminPwd);
+        
+        user.save();
+
+        var user1 = new User();
+
+        user1.firstname = config.defaultUserFirstName;
+        user1.lastname = config.defaultUserLastName;
+        user1.username = config.defaultUser;
+        user1.roles = [];
+        user1.setPassword(config.defaultUserPwd);
+
+        user1.save();
+    }
+    });
+}
+
+exports.createDefaultAdminUsers = createDefaultAdminUsers;
