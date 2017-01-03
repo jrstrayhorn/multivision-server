@@ -8,3 +8,12 @@ exports.getCourses = function(req, res, next){
     res.json(courses);
   });
 };
+
+exports.getCourseById = function(req, res, next){
+  Course.findById(req.params._id).exec(function(err, course) {
+    if (err) { return next(err); }
+    if (!course) { return next(new Error("can't find course")); }
+
+    res.json(course);
+  });
+};

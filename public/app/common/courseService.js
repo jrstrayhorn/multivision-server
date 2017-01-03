@@ -4,11 +4,16 @@ angular.module('app').factory('courseService', ['$http', 'authService', '$q', fu
     var service = {};
 
     service.GetAll = GetAll;
+    service.GetById = GetById;
 
     return service;
 
     function GetAll() {
         return $http.get(apiUrl).then(handleSuccess, handleError);
+    }
+
+    function GetById(_id) {
+        return $http.get(apiUrl + '/' + _id).then(handleSuccess, handleError);
     }
 
     // private functions

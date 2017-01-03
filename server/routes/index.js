@@ -22,6 +22,7 @@ router.put('/api/users', authJWT, users.updateUser);
 
 /* courses routes */
 router.get('/api/courses', courses.getCourses);
+router.get('/api/courses/:_id', courses.getCourseById);
 
 /* authentication routes */
 router.post('/register', users.createUser);

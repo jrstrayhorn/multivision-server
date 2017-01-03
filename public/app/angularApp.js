@@ -16,7 +16,7 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', function($
         })
 
         .state('courseDetails', {
-            url: '/courses/{id}',
+            url: '/courses/{_id}',
             templateUrl: '/app/courses/course-details.html',
             controller: 'courseDetailsCtrl'
         })

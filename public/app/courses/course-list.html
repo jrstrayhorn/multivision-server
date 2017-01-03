@@ -18,7 +18,9 @@
         </thead>
         <tbody>
             <tr ng-repeat="course in courses | filter:searchText | orderBy:sortOrder">
-                <td>{{course.title}}</td>
+                <td>
+                    <a href="#/courses/{{course._id}}">{{course.title}}</a>    
+                </td>
                 <td>{{course.published | date}}</td>
             </tr>
         </tbody>
